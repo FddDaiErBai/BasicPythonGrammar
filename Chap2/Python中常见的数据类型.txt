@@ -1,0 +1,11 @@
+"""
+author: FddDaiErBai
+date: 2022.03.31
+
+"""
+数据类型
+浮点型：float
+整数型：int
+布尔型：bool
+字符串类型：str
+"""
