@@ -12,3 +12,5 @@ def add(a, b):
 
 def div(a, b):
     return a/b
+
+print(add(10,30))
