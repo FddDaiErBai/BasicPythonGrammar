@@ -23,7 +23,7 @@ class Student(Person):
 
 class Teacher(Person):
     def __init__(self, name, age, teach_of_year):
-        super.__init__(name, age)
+        super().__init__(name, age)
         self.teach_of_year = teach_of_year
 
 
