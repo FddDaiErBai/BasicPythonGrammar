@@ -83,7 +83,7 @@ def show_student(lst):
     for item in lst:
         print(format_data.format(item.get('id'), item.get('name'), item.get('en_list'), item.get(
             'python_list'), item.get('java_list'), int(item.get('en_list'))+int(item.get('python_list'))+int(item.get('java_list'))))
-
+    input('输入回车以继续:')
 
 def search():
     student_query = []
@@ -219,7 +219,16 @@ def total():
 
 
 def show():
-    pass
+    student_lst = []
+    if os.path.exists(file_name):
+        with open(file_name, 'r', encoding='utf-8') as r_file:
+            students = r_file
+            for item in students:
+                student_lst.append(eval(item))
+            if student_lst:
+                show_student(student_lst)
+    else:
+        print('暂未保存数据!')
 
 
 def main():
