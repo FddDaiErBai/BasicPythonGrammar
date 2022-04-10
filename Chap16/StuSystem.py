@@ -4,7 +4,7 @@
 author: FddDaiErBai
 date: 2022.04.09
 """
-
+file_name='student.txt'
 
 def menu():
     print('=================================学生管理系统=================================')
@@ -19,10 +19,48 @@ def menu():
     print('\t\t\t\t0.退出')
     print('----------------------------------------------------------------------------')
 
+def save(lst):
+    try:
+        stu_txt=open(file_name,'a',encoding='utf-8')      
+    except:
+        stu_txt=open(file_name,'w',encoding='utf-8')
+        
+    for item in lst:
+        stu_txt.write(str(item)+'\n')
+    
+    stu_txt.close()
+    
 
 def insert():
-    pass
-
+    student_list=[]
+    while True:
+        id=input('请输入学生的id(如1001):')
+        if not id:
+            break
+        name=input('请输入姓名:')
+        if not name:
+            break
+        try:
+            en_list=int(input('请输入英语成绩:'))
+            python_list=int(input('请输入python成绩:'))
+            java_list=int(input('请输入java成绩:'))
+            
+        except:
+            print('输入无效,不是整数类型,请重新输入')
+            continue
+        
+        # 将录入的学生信息保存到字典中
+        student={'id':id,'name':name,'en_list':en_list,'python_list':python_list,'java_list':java_list}
+        student_list.append(student)
+        answer=input('是否继续添加?')
+        if answer=='y' or answer=='Y':
+            continue
+        else:
+            break
+    
+    # 调用save()函数
+    save(student_list)
+    print('学生信息录入完毕!')
 
 def search():
     pass
