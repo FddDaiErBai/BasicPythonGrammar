@@ -4,8 +4,8 @@
 author: FddDaiErBai
 date: 2022.04.09
 """
-import os
 
+import os
 
 file_name = 'student.txt'
 
@@ -84,6 +84,7 @@ def show_student(lst):
         print(format_data.format(item.get('id'), item.get('name'), item.get('en_list'), item.get(
             'python_list'), item.get('java_list'), int(item.get('en_list'))+int(item.get('python_list'))+int(item.get('java_list'))))
     input('输入回车以继续:')
+
 
 def search():
     student_query = []
@@ -202,7 +203,50 @@ def modify():
 
 
 def sort():
-    pass
+    show()
+    if os.path.exists(file_name):
+        with open(file_name, 'r', encoding='utf-8') as r_file:
+            student_list = r_file.readlines()
+
+        student_new = []
+        for item in student_list:
+            d = dict(eval(item))
+            student_new.append(d)
+
+    else:
+        return
+
+    asc_or_desc = int(input('请选择(0.升序 1.降序):'))
+    if asc_or_desc == 0:
+        asc_or_desc_bool = False
+    elif asc_or_desc == 1:
+        asc_or_desc_bool = True
+
+    else:
+        input('您的输入有误,请重新输入!')
+        sort()
+
+    mode = int(input('请选择排序方式(1.按英语成绩排序 2.按python成绩排序 3.按java成绩排序 4.按总成绩排序):'))
+    if mode == 1:
+        student_new.sort(key=lambda student_new: int(
+            student_new['en_list']), reverse=asc_or_desc_bool)
+
+    elif mode == 2:
+        student_new.sort(key=lambda student_new: int(
+            student_new['python_list']), reverse=asc_or_desc_bool)
+
+    elif mode == 3:
+        student_new.sort(key=lambda student_new: int(
+            student_new['java_list']), reverse=asc_or_desc_bool)
+
+    elif mode == 4:
+        student_new.sort(key=lambda student_new: int(student_new['en_list'])+int(
+            student_new['python_list'])+int(student_new['java_list']), reverse=asc_or_desc_bool)
+    else:
+        print('您的输入有误,请重新输入!')
+        sort()
+
+    show_student(student_new)
 
 
 def total():
