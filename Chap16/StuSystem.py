@@ -4,7 +4,11 @@
 author: FddDaiErBai
 date: 2022.04.09
 """
-file_name='student.txt'
+import os
+
+
+file_name = 'student.txt'
+
 
 def menu():
     print('=================================学生管理系统=================================')
@@ -19,55 +23,93 @@ def menu():
     print('\t\t\t\t0.退出')
     print('----------------------------------------------------------------------------')
 
+
 def save(lst):
     try:
-        stu_txt=open(file_name,'a',encoding='utf-8')      
+        stu_txt = open(file_name, 'a', encoding='utf-8')
     except:
-        stu_txt=open(file_name,'w',encoding='utf-8')
-        
+        stu_txt = open(file_name, 'w', encoding='utf-8')
+
     for item in lst:
         stu_txt.write(str(item)+'\n')
-    
+
     stu_txt.close()
-    
+
 
 def insert():
-    student_list=[]
+    student_list = []
     while True:
-        id=input('请输入学生的id(如1001):')
+        id = input('请输入学生的id(如1001):')
         if not id:
             break
-        name=input('请输入姓名:')
+        name = input('请输入姓名:')
         if not name:
             break
         try:
-            en_list=int(input('请输入英语成绩:'))
-            python_list=int(input('请输入python成绩:'))
-            java_list=int(input('请输入java成绩:'))
-            
+            en_list = int(input('请输入英语成绩:'))
+            python_list = int(input('请输入python成绩:'))
+            java_list = int(input('请输入java成绩:'))
+
         except:
             print('输入无效,不是整数类型,请重新输入')
             continue
-        
+
         # 将录入的学生信息保存到字典中
-        student={'id':id,'name':name,'en_list':en_list,'python_list':python_list,'java_list':java_list}
+        student = {'id': id, 'name': name, 'en_list': en_list,
+                   'python_list': python_list, 'java_list': java_list}
         student_list.append(student)
-        answer=input('是否继续添加?')
-        if answer=='y' or answer=='Y':
+        answer = input('是否继续添加?')
+        if answer == 'y' or answer == 'Y':
             continue
         else:
             break
-    
+
     # 调用save()函数
     save(student_list)
     print('学生信息录入完毕!')
+
 
 def search():
     pass
 
 
 def delete():
-    pass
+    while True:
+        student_id = input('请输入要删除学生到id:')
+        if student_id != '':
+            if os.path.exists(file_name):
+                with open(file_name, 'r', encoding='utf-8') as file:
+                    student_old = file.readlines()
+            else:
+                student_old = []
+
+            flag = False  # 标记是否删除
+
+            if student_old:
+                with open(file_name, 'w', encoding='utf-8') as file:
+                    d = {}
+                    for item in student_old:
+                        d = dict(eval(item))
+                        if d['id'] != student_id:
+                            file.write(str(d)+'\n')
+                        else:
+                            flag = True
+
+                        if flag:
+                            print('id为{student_id的学生信息已被删除}')
+                        else:
+                            print('没有找到id为{student_id}的学生信息')
+
+            else:
+                print('无学生信息')
+                break
+
+            show()  # 删除之后要重新显示所以学生信息
+            answer = input('是否要继续删除?')
+            if answer == 'y' or answer == 'Y':
+                continue
+            else:
+                break
 
 
 def modify():
