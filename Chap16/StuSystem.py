@@ -113,7 +113,39 @@ def delete():
 
 
 def modify():
-    pass
+    show()
+    if os.path.exists(file_name):
+        with open(file_name, 'r', encoding='utf-8') as r_file:
+            student_old = r_file.readlines()
+    else:
+        return
+
+    student_id = input('请输入要修改学生的id:')
+    if student_id:
+        with open(file_name, 'w', encoding='utf-8') as w_file:
+            for item in student_old:
+                d = dict(eval(item))
+                if d['id'] == student_id:
+                    print('找到学生信息,可以修改学生信息!')
+                    while True:
+                        try:
+                            d['name'] = input('请输入姓名:')
+                            d['en_list'] = input('请输入英语成绩:')
+                            d['python_list'] = input('请输入python成绩:')
+                            d['java_list'] = input('请输入java成绩:')
+                        except:
+                            print('您的输入有问题,请重新输入!')
+                        else:
+                            break
+                    w_file.write(str(d)+'\n')
+                    print('修改成功!')
+                else:
+                    w_file.write(str(d)+'\n')
+            answer = input('是否继续修改其他学生信息')
+            if answer == 'y' or answer == 'Y':
+                modify()
+    else:
+        return
 
 
 def sort():
