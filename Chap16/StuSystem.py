@@ -84,6 +84,7 @@ def show_student(lst):
         print(format_data.format(item.get('id'), item.get('name'), item.get('en_list'), item.get(
             'python_list'), item.get('java_list'), int(item.get('en_list'))+int(item.get('python_list'))+int(item.get('java_list'))))
 
+
 def search():
     student_query = []
     while True:
@@ -205,7 +206,16 @@ def sort():
 
 
 def total():
-    pass
+    if os.path.exists(file_name):
+        with open(file_name, 'r', encoding='utf-8') as r_file:
+            students = r_file.readlines()
+            if students:
+                print(f'一共有{len(students)}名学生')
+            else:
+                print('还没有录入学生信息')
+
+    else:
+        print('暂未保存数据信息!')
 
 
 def show():
